@@ -6,7 +6,7 @@ class Api::V1::SurveysController < ApplicationController
   end
 
   def create
-    survey = Survey.new(name: params[:name], permalink: params[:permalink])
+    survey = Survey.new(survey_params)
 
     if survey.save
       render json: survey
@@ -27,5 +27,11 @@ class Api::V1::SurveysController < ApplicationController
     survey.destroy
 
     render json: "#{survey.id} is deleted"
+  end
+
+  private
+
+  def survey_params
+    params.require(:survey).permit(:name, :permalink)
   end
 end
