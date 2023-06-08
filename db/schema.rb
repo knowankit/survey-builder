@@ -10,13 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_091339) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_122612) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "surveys", force: :cascade do |t|
     t.string "name"
     t.string "permalink"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "user_id"
+    t.boolean "is_published", default: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "username"
+    t.string "email"
+    t.date "last_seen"
+    t.boolean "is_confirmed"
+    t.string "role"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
