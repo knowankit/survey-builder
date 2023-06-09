@@ -1,4 +1,6 @@
 class Api::V1::SurveysController < ApplicationController
+  before_action :authenticate_user
+
   def index
     surveys = Survey.all
 

@@ -1,3 +1,5 @@
+require 'JWT'
+
 class Api::V1::UsersController < ApplicationController
   def index
     users = User.all
@@ -6,10 +8,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    user = User.new(name: params[:name], username: params[:username], email: params[:email], is_confirmed: params[:is_confirmed], role: params[:role], last_seen: params[:last_seen], password: params[:password_digest])
+    user = User.new(user_params)
 
     if user.save
-      render json: user
+      token = generate_token(user)
+      render json: { token: token }
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -32,6 +35,10 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :username, :email, :is_confirmed, :role, :last_seen, :password_digest)
+    params.require(:user).permit(:name, :username, :email, :is_confirmed, :role, :last_seen, :password)
+  end
+
+  def generate_token(user)
+    JWT.encode({ user_id: user.id }, Rails.application.credentials.jwt_secret_key, 'HS256')
   end
 end
