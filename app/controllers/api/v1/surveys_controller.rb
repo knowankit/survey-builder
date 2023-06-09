@@ -32,6 +32,6 @@ class Api::V1::SurveysController < ApplicationController
   private
 
   def survey_params
-    params.require(:survey).permit(:name, :permalink)
+    params.require(:survey).permit(:name, :permalink, :is_published, :user_id)
   end
 end
