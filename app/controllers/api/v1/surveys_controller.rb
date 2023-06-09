@@ -15,6 +15,11 @@ class Api::V1::SurveysController < ApplicationController
     end
   end
 
+  def show
+    survey = Survey.find(params[:id])
+    render json: survey
+  end
+
   def update
     survey = Survey.find(params[:id])
     survey = Survey.update(name: params[:name], permalink: params[:permalink])
