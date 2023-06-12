@@ -1,4 +1,6 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < Api::V1::ApplicationController
+  before_action :authenticate_user, only: [:index]
+
   def index
     users = User.all
 
@@ -6,10 +8,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    user = User.new(name: params[:name], username: params[:username], email: params[:email], is_confirmed: params[:is_confirmed], role: params[:role], last_seen: params[:last_seen], password: params[:password_digest])
+    user = User.new(user_params.merge(password: params[:password]))
 
     if user.save
-      render json: user
+      token = generate_token(user)
+      render json: { token: token }
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -33,5 +36,10 @@ class Api::V1::UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :username, :email, :is_confirmed, :role, :last_seen, :password_digest)
+  end
+
+  def generate_token(user)
+    secret = ENV['jwt_secret_key']
+    JWT.encode({ user_id: user.id }, secret, 'HS256')
   end
 end
