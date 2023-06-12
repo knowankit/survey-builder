@@ -1,4 +1,4 @@
-class Api::V1::SurveysController < ApplicationController
+class Api::V1::SurveysController < Api::V1::ApplicationController
   before_action :authenticate_user
 
   def index

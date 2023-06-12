@@ -1,4 +1,4 @@
-class ApplicationController < ActionController::API
+class Api::V1::ApplicationController < ActionController::API
   before_action :authenticate_user
 
   private
@@ -17,7 +17,9 @@ class ApplicationController < ActionController::API
   end
 
   def decode_token(token)
-    JWT.decode(token, Rails.application.credentials.jwt_secret_key, true, algorithm: 'HS256')
+    secret = ENV['jwt_secret_key']
+
+    JWT.decode(token, secret, true, algorithm: 'HS256')
   end
 
   def current_user
