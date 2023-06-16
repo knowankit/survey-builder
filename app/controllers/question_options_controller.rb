@@ -1,0 +1,2 @@
+class QuestionOptionsController < ApplicationController
+end
