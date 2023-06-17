@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :answers
   resources :responses
   resources :question_options
   namespace :api do
