@@ -10,9 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_08_142934) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_17_082915) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "answers", force: :cascade do |t|
+    t.string "content"
+    t.bigint "response_id"
+    t.bigint "survey_id"
+    t.bigint "question_option_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_option_id"], name: "index_answers_on_question_option_id"
+    t.index ["response_id"], name: "index_answers_on_response_id"
+    t.index ["survey_id"], name: "index_answers_on_survey_id"
+  end
+
+  create_table "question_options", force: :cascade do |t|
+    t.string "content"
+    t.bigint "question_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_question_options_on_question_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "content"
+    t.string "question_type"
+    t.bigint "survey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_questions_on_survey_id"
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.datetime "submitted_at"
+    t.bigint "user_id"
+    t.bigint "survey_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["survey_id"], name: "index_responses_on_survey_id"
+    t.index ["user_id"], name: "index_responses_on_user_id"
+  end
 
   create_table "surveys", force: :cascade do |t|
     t.string "name"
@@ -36,5 +75,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_142934) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "answers", "question_options"
+  add_foreign_key "answers", "responses"
+  add_foreign_key "answers", "surveys"
+  add_foreign_key "question_options", "questions"
+  add_foreign_key "questions", "surveys"
+  add_foreign_key "responses", "surveys"
+  add_foreign_key "responses", "users"
   add_foreign_key "surveys", "users"
 end
