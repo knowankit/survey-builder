@@ -4,6 +4,6 @@ class Survey < ApplicationRecord
   has_many :responses
 
   validates :name, presence: true
-  validates :permalink, presence: true
+  validates :permalink, presence: true, uniqueness: true
 
 end

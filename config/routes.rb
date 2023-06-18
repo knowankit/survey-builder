@@ -6,8 +6,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: [:create]
       resources :surveys
+        resources :questions
       resources :users
-      resources :questions
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
