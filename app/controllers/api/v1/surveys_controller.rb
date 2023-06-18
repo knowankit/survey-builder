@@ -2,8 +2,7 @@ class Api::V1::SurveysController < Api::V1::ApplicationController
   before_action :authenticate_user
 
   def index
-    surveys = Survey.all
-
+    surveys = Survey.where(user_id: @current_user.id)
     render json: surveys
   end
 
