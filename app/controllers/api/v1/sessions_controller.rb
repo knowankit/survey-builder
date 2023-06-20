@@ -16,7 +16,6 @@ class Api::V1::SessionsController < ApplicationController
 
   def generate_access_token(user)
     secret = ENV['jwt_secret_key']
-    # JWT.encode({ user_id: user.id }, secret, 'HS256')
 
     # Set the expiration time for the access token
     expiration_time = Time.now.to_i + 3600 # One hour from now
@@ -38,7 +37,7 @@ class Api::V1::SessionsController < ApplicationController
     refresh_token = SecureRandom.base58(32)
 
     # Set the expiration time for the refresh token
-    expiration_time = Time.now + 1.hour
+    expiration_time = Time.now + 2.hour
     # Save the refresh token in the database, associating it with the user
     RefreshToken.create(user: user, token: refresh_token, expires_at: expiration_time)
 

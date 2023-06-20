@@ -52,7 +52,7 @@ class Api::V1::ApplicationController < ActionController::API
       # Return the new refresh token along with the response
       render json: { refresh_token: new_refresh_token }
     else
-      # render json: { error: 'Unauthorized' }, status: :unauthorized
+      render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 
