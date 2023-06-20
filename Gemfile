@@ -29,6 +29,10 @@ gem 'jwt'
 # For storing env
 gem 'figaro'
 
+gem 'sprockets'
+gem 'sass-rails'
+gem 'uglifier'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
