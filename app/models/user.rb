@@ -4,6 +4,8 @@ class User < ApplicationRecord
   include BCrypt
 
   has_many :surveys
+  has_many :refresh_tokens, dependent: :destroy
+
   has_secure_password :password
 
   validates :name, presence: true
