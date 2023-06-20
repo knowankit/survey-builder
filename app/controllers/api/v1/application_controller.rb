@@ -13,7 +13,7 @@ class Api::V1::ApplicationController < ActionController::API
       @current_user = User.find_by(id: user_id)
 
       # Validate the refresh token along with the access token
-      validate_refresh_token(request.headers['Refresh-Token']) if @current_user
+      # validate_refresh_token(request.headers['Refresh-Token']) if @current_user
     else
       render json: { error: 'Unauthorized' }, status: :unauthorized
     end
@@ -38,10 +38,7 @@ class Api::V1::ApplicationController < ActionController::API
   end
 
   def validate_refresh_token(refresh_token)
-    puts "Token =>>>>>> "
-
     refresh_token_record = RefreshToken.find_by(token: refresh_token)
-    puts "refresh token = #{refresh_token_record.expires_at}"
 
     if refresh_token_record && refresh_token_record.user_id == @current_user.id && refresh_token_record.expires_at > Time.now
       # Refresh token is valid and has not expired, continue with the request
@@ -55,7 +52,7 @@ class Api::V1::ApplicationController < ActionController::API
       # Return the new refresh token along with the response
       render json: { refresh_token: new_refresh_token }
     else
-      render json: { error: 'Unauthorized' }, status: :unauthorized
+      # render json: { error: 'Unauthorized' }, status: :unauthorized
     end
   end
 
@@ -82,9 +79,10 @@ class Api::V1::ApplicationController < ActionController::API
   def generate_refresh_token(user)
     # Generate a new refresh token using a secure random token generator
     refresh_token = SecureRandom.base58(32)
+    expiration_time = Time.now + 1.hour
 
     # Save the refresh token in the database, associating it with the user
-    RefreshToken.create(user: user, token: refresh_token)
+    RefreshToken.create(user: user, token: refresh_token, expires_at: expiration_time)
 
     refresh_token
   end

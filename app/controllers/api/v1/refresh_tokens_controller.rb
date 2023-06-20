@@ -5,6 +5,7 @@ class Api::V1::RefreshTokensController < Api::V1::ApplicationController
     if refresh_token && refresh_token.user
       # Generate a new access token for the user
       access_token = generate_access_token(refresh_token.user)
+      refresh_token.destroy
 
       render json: { access_token: access_token }
     else
