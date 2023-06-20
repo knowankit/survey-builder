@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_18_152802) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_18_173014) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_152802) do
     t.bigint "user_id"
     t.boolean "is_answered", default: false
     t.index ["survey_id"], name: "index_questions_on_survey_id"
+  end
+
+  create_table "refresh_tokens", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "token"
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "responses", force: :cascade do |t|

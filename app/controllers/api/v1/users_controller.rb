@@ -11,8 +11,9 @@ class Api::V1::UsersController < Api::V1::ApplicationController
     user = User.new(user_params.merge(password: params[:password]))
 
     if user.save
-      token = generate_token(user)
-      render json: { token: token }
+      access_token = generate_access_token(user)
+      refresh_token = generate_refresh_token(user)
+      render json: { access_token: access_token, refresh_token: refresh_token }
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -36,10 +37,5 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :username, :email, :is_confirmed, :role, :last_seen, :password_digest)
-  end
-
-  def generate_token(user)
-    secret = ENV['jwt_secret_key']
-    JWT.encode({ user_id: user.id }, secret, 'HS256')
   end
 end
