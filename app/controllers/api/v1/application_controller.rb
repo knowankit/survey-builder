@@ -79,7 +79,7 @@ class Api::V1::ApplicationController < ActionController::API
   def generate_refresh_token(user)
     # Generate a new refresh token using a secure random token generator
     refresh_token = SecureRandom.base58(32)
-    expiration_time = Time.now + 1.hour
+    expiration_time = Time.now + 7.hour
 
     # Save the refresh token in the database, associating it with the user
     RefreshToken.create(user: user, token: refresh_token, expires_at: expiration_time)
