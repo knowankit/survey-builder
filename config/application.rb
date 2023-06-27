@@ -27,7 +27,10 @@ module SurveyBuilder
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins ['http://localhost:3000', 'https://survey-builder-form.vercel.app']
-        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options]
+        resource '*',
+          headers: :any,
+          headers: :any, methods: [:get, :post, :put, :patch, :delete, :options],
+          credentials: true
       end
     end
   end
