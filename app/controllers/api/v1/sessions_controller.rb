@@ -54,11 +54,10 @@ class Api::V1::SessionsController < ApplicationController
     refresh_token = SecureRandom.base58(32)
 
     # Set the expiration time for the refresh token
-    expiration_time = Time.now + 7.hour
+    expiration_time = Time.now + 7.days
     # Save the refresh token in the database, associating it with the user
     RefreshToken.create(user: user, token: refresh_token, expires_at: expiration_time)
 
     refresh_token
   end
-
 end
