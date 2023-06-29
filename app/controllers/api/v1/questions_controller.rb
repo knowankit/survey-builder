@@ -2,7 +2,7 @@ class Api::V1::QuestionsController < Api::V1::ApplicationController
   before_action :authenticate_user
 
   def index
-    questions = Question.find_by(survey_id: params[:survey_id], user_id: @current_user.id) || []
+    questions = Question.where(survey_id: params[:survey_id], user_id: @current_user.id) || []
 
     render json: questions
   end

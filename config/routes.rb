@@ -6,13 +6,15 @@ Rails.application.routes.draw do
       resources :sessions, only: [:create]
 
       resources :surveys do
-        resources :questions
+        resources :questions do
+          resources :question_options
+        end
       end
 
       resources :users
       resources :answers
       resources :responses
-      resources :question_options
+
       resources :refresh_tokens, only: %i[create destroy]
     end
   end
