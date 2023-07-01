@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       resources :refresh_tokens, only: %i[create destroy]
     end
   end
+
+  get '/heartbeat', to: 'heartbeat#index'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
