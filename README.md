@@ -1,24 +1,16 @@
-# README
+# Survey Builder
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Question types
 
-Things you may want to cover:
+1. Multiple Choice
+2. Checkboxes
+3. Dropdown
+4. Rating Scale
+5. Open Ended
+6. Numeric Input
+7. Matric (Not in scope as of now)
+8. Ranking (Not in scope as of now)
+9. Date Time
 
-* Ruby version
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Services (job queues, cache servers, search engines, etc.)
