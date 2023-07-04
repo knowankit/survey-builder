@@ -12,15 +12,17 @@ class Api::V1::SessionsController < ApplicationController
         value: access_token,
         expires: 1.hour.from_now,
         secure: Rails.env.production?,
+        httpOnly: Rails.env.production?,
         same_site: :strict
       }
 
       # Set the refresh token in the cookie
       cookies[:refresh_token] = {
         value: refresh_token,
-        expires: 7.days.from_now,  # Adjust the expiration time as needed
-        secure: Rails.env.production?,  # Set 'secure' flag for production environment
-        same_site: :strict  # Set 'same_site' attribute for stricter cross-site cookie policy
+        expires: 7.days.from_now,
+        secure: Rails.env.production?,
+        httpOnly: Rails.env.production?,
+        same_site: :strict
       }
 
       render json: { access_token: access_token, refresh_token: refresh_token }
