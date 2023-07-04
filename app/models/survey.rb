@@ -5,5 +5,4 @@ class Survey < ApplicationRecord
 
   validates :name, presence: true
   validates :permalink, presence: true, uniqueness: true
-
 end

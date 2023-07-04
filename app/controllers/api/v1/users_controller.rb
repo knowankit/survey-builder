@@ -13,7 +13,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
     if user.save
       access_token = generate_access_token(user)
       refresh_token = generate_refresh_token(user)
-      render json: { access_token: access_token, refresh_token: refresh_token }
+      render json: { access_token:, refresh_token: }
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end

@@ -21,9 +21,9 @@ class Api::V1::QuestionOptionsController < Api::V1::ApplicationController
   def destroy
     question_option = Question.find_by(id: params[:question_id], user_id: @current_user.id)
 
-    if question_option.destroy
-      render json: question_option
-    end
+    return unless question_option.destroy
+
+    render json: question_option
   end
 
   private

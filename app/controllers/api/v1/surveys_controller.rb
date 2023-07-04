@@ -6,6 +6,16 @@ class Api::V1::SurveysController < Api::V1::ApplicationController
     render json: surveys
   end
 
+  def show
+    survey = Survey.find_by(id: params[:id], user_id: @current_user.id)
+
+    if survey
+      render json: survey
+    else
+      render json: { error: 'Survey not found' }, status: :not_found
+    end
+  end
+
   def create
     survey = Survey.new(survey_params)
     survey.user_id = @current_user.id
@@ -14,16 +24,6 @@ class Api::V1::SurveysController < Api::V1::ApplicationController
       render json: survey
     else
       render json: { errors: survey.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  def show
-    survey = Survey.find_by(id: params[:id], user_id: @current_user.id)
-
-    if survey
-      render json: survey
-    else
-      render json: { error: "Survey not found" }, status: :not_found
     end
   end
 
@@ -37,7 +37,7 @@ class Api::V1::SurveysController < Api::V1::ApplicationController
         render json: { error: survey.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: { error: "Survey not found" }, status: :not_found
+      render json: { error: 'Survey not found' }, status: :not_found
     end
   end
 
@@ -51,7 +51,7 @@ class Api::V1::SurveysController < Api::V1::ApplicationController
         render json: { error: survey.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: { error: "Survey not found" }, status: :not_found
+      render json: { error: 'Survey not found' }, status: :not_found
     end
   end
 

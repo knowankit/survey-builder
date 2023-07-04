@@ -1,0 +1,20 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2.2
+  Exclude:
+    - "spec/fixtures/**/*"
+    - "tmp/**/*"
+    - ".git/**"
+    - "db/schema.rb"
+    - "db/**/*"
+    - "Rakefile"
+    - "config.ru"
+    - "Gemfile*"
+    - "bin/**/*"
+    - "lib/tasks/*.rake"
+    - "config/environments/*"
