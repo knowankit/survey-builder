@@ -12,18 +12,20 @@ class Api::V1::SessionsController < ApplicationController
         value: access_token,
         expires: 1.hour.from_now,
         secure: Rails.env.production?,
+        httpOnly: Rails.env.production?,
         same_site: :strict
       }
 
       # Set the refresh token in the cookie
       cookies[:refresh_token] = {
         value: refresh_token,
-        expires: 7.days.from_now,  # Adjust the expiration time as needed
-        secure: Rails.env.production?,  # Set 'secure' flag for production environment
-        same_site: :strict  # Set 'same_site' attribute for stricter cross-site cookie policy
+        expires: 7.days.from_now,
+        secure: Rails.env.production?,
+        httpOnly: Rails.env.production?,
+        same_site: :strict
       }
 
-      render json: { access_token: access_token, refresh_token: refresh_token }
+      render json: { access_token:, refresh_token: }
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
@@ -32,7 +34,7 @@ class Api::V1::SessionsController < ApplicationController
   private
 
   def generate_access_token(user)
-    secret = ENV['jwt_secret_key']
+    secret = ENV.fetch('jwt_secret_key', nil)
 
     # Set the expiration time for the access token
     expiration_time = Time.now.to_i + 3600 # One hour from now
@@ -44,9 +46,7 @@ class Api::V1::SessionsController < ApplicationController
     }
 
     # Sign the access token using a secret key
-    access_token = JWT.encode(access_token_payload, secret, 'HS256')
-
-    access_token
+    JWT.encode(access_token_payload, secret, 'HS256')
   end
 
   def generate_refresh_token(user)
@@ -56,7 +56,7 @@ class Api::V1::SessionsController < ApplicationController
     # Set the expiration time for the refresh token
     expiration_time = Time.now + 7.days
     # Save the refresh token in the database, associating it with the user
-    RefreshToken.create(user: user, token: refresh_token, expires_at: expiration_time)
+    RefreshToken.create(user:, token: refresh_token, expires_at: expiration_time)
 
     refresh_token
   end

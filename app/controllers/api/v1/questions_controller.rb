@@ -20,18 +20,19 @@ class Api::V1::QuestionsController < Api::V1::ApplicationController
   end
 
   def destroy
-    question = Question.find_by(id: params[:id] ,survey_id: params[:survey_id], user_id: @current_user.id)
+    question = Question.find_by(id: params[:id], survey_id: params[:survey_id], user_id: @current_user.id)
 
     if question
       if question.is_answered?
-        render json: { error: "Question has already been answered and cannot be deleted" }, status: :unprocessable_entity
+        render json: { error: 'Question has already been answered and cannot be deleted' },
+               status: :unprocessable_entity
       elsif question.destroy
         render json: question
       else
         render json: { error: question.errors.full_messages }, status: :unprocessable_entity
       end
     else
-      render json: { error: "Question not found" }, status: :not_found
+      render json: { error: 'Question not found' }, status: :not_found
     end
   end
 

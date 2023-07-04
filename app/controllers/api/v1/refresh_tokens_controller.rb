@@ -7,7 +7,7 @@ class Api::V1::RefreshTokensController < Api::V1::ApplicationController
       access_token = generate_access_token(refresh_token.user)
       refresh_token.destroy
 
-      render json: { access_token: access_token }
+      render json: { access_token: }
     else
       render json: { error: 'Invalid refresh token' }, status: :unauthorized
     end

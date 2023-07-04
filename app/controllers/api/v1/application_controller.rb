@@ -28,14 +28,12 @@ class Api::V1::ApplicationController < ActionController::API
   end
 
   def decode_token(token)
-    secret = ENV['jwt_secret_key']
+    secret = ENV.fetch('jwt_secret_key', nil)
 
     JWT.decode(token, secret, true, algorithm: 'HS256')
   end
 
-  def current_user
-    @current_user
-  end
+  attr_reader :current_user
 
   def validate_refresh_token(refresh_token)
     refresh_token_record = RefreshToken.find_by(token: refresh_token)
@@ -56,9 +54,8 @@ class Api::V1::ApplicationController < ActionController::API
     end
   end
 
-
   def generate_access_token(user)
-    secret = ENV['jwt_secret_key']
+    secret = ENV.fetch('jwt_secret_key', nil)
     # JWT.encode({ user_id: user.id }, secret, 'HS256')
 
     # Set the expiration time for the access token
@@ -71,18 +68,16 @@ class Api::V1::ApplicationController < ActionController::API
     }
 
     # Sign the access token using a secret key
-    access_token = JWT.encode(access_token_payload, secret, 'HS256')
-
-    access_token
+    JWT.encode(access_token_payload, secret, 'HS256')
   end
 
   def generate_refresh_token(user)
     # Generate a new refresh token using a secure random token generator
     refresh_token = SecureRandom.base58(32)
-    expiration_time = Time.now + 7.hour
+    expiration_time = Time.now + 7.hours
 
     # Save the refresh token in the database, associating it with the user
-    RefreshToken.create(user: user, token: refresh_token, expires_at: expiration_time)
+    RefreshToken.create(user:, token: refresh_token, expires_at: expiration_time)
 
     refresh_token
   end
