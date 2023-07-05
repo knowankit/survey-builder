@@ -1,44 +1,65 @@
-class Api::V1::QuestionsController < Api::V1::ApplicationController
-  before_action :authenticate_user
+# frozen_string_literal: true
 
-  def index
-    questions = Question.where(survey_id: params[:survey_id], user_id: @current_user.id) || []
+module Api
+  module V1
+    # This class handles API requests related to question.
+    class QuestionsController < Api::V1::ApplicationController
+      before_action :authenticate_user
 
-    render json: questions
-  end
+      def index
+        questions = Question.where(survey_id: params[:survey_id], user_id: @current_user.id) || []
 
-  def create
-    question = Question.new(question_params)
-    question.user_id = @current_user.id
-    question.survey_id = params[:survey_id]
+        render json: questions
+      end
 
-    if question.save
-      render json: question
-    else
-      render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
+      def create
+        question = Question.new(question_params)
+        question.user_id = @current_user.id
+        question.survey_id = params[:survey_id]
 
-  def destroy
-    question = Question.find_by(id: params[:id], survey_id: params[:survey_id], user_id: @current_user.id)
+        if question.save
+          render json: question
+        else
+          render json: { errors: question.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
 
-    if question
-      if question.is_answered?
+      def destroy
+        question = find_question
+
+        return render_question_not_found unless question
+
+        if question.is_answered?
+          render_question_already_answered
+        elsif question.destroy
+          render json: question
+        else
+          render_question_errors(question)
+        end
+      end
+
+      private
+
+      def question_params
+        params.require(:question).permit(:content, :question_type)
+      end
+
+      def find_question
+        Question.find_by(id: params[:id], survey_id: params[:survey_id], user_id: @current_user.id)
+      end
+
+      def render_question_not_found
+        render json: { error: 'Question not found' }, status: :not_found
+      end
+
+      def render_question_already_answered
         render json: { error: 'Question has already been answered and cannot be deleted' },
                status: :unprocessable_entity
-      elsif question.destroy
-        render json: question
-      else
+      end
+
+      def render_question_errors(question)
         render json: { error: question.errors.full_messages }, status: :unprocessable_entity
       end
-    else
-      render json: { error: 'Question not found' }, status: :not_found
     end
-  end
-
-  private
-
-  def question_params
-    params.require(:question).permit(:content, :question_type)
   end
 end

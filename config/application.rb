@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -7,6 +9,7 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module SurveyBuilder
+  # This class handles app configuration
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -28,7 +31,6 @@ module SurveyBuilder
       allow do
         origins ['http://localhost:3000', 'https://survey-builder-form.vercel.app']
         resource '*',
-                 headers: :any,
                  headers: :any, methods: %i[get post put patch delete options],
                  credentials: true
       end

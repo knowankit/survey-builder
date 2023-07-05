@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require 'bcrypt'
 
+# This model contains the User schema
 class User < ApplicationRecord
   include BCrypt
 
-  has_many :surveys
+  has_many :surveys, dependent: :destroy
   has_many :refresh_tokens, dependent: :destroy
 
   has_secure_password :password
