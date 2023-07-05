@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # This class handles authentication of user with cookies
     class ApplicationController < ActionController::API
       before_action :authenticate_user
 
@@ -42,7 +43,9 @@ module Api
       def validate_refresh_token(refresh_token)
         refresh_token_record = RefreshToken.find_by(token: refresh_token)
 
-        if refresh_token_record && refresh_token_record.user_id == @current_user.id && refresh_token_record.expires_at > Time.zone.now
+        if refresh_token_record &&
+           refresh_token_record.user_id == @current_user.id &&
+           refresh_token_record.expires_at > Time.zone.now
           # Refresh token is valid and has not expired, continue with the request
 
           # Generate a new refresh token

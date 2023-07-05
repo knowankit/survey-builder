@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # This class handles API requests related to user
     class UsersController < Api::V1::ApplicationController
       before_action :authenticate_user, only: [:index]
 

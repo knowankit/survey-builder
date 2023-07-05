@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # This class handles API requests related to question options.
     class QuestionOptionsController < Api::V1::ApplicationController
       def index
         question_options = QuestionOption.where(question_id: params[:question_id])

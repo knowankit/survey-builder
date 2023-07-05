@@ -2,6 +2,7 @@
 
 module Api
   module V1
+    # This class handles API requests related to Refresh token creation and deletion.
     class RefreshTokensController < Api::V1::ApplicationController
       def create
         refresh_token = RefreshToken.find_by(token: params[:refresh_token])
