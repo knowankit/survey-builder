@@ -12,10 +12,10 @@ module Api
       end
 
       def show
-        survey = Survey.find_by(id: params[:id], user_id: @current_user.id)
+        survey = Survey.includes(questions: :question_options).find_by(id: params[:id], user_id: @current_user.id)
 
         if survey
-          render json: survey
+          render json: survey, include: { questions: { include: :question_options } }
         else
           render json: { error: 'Survey not found' }, status: :not_found
         end
