@@ -1,0 +1,5 @@
+class DropColumnSubmittedInResponse < ActiveRecord::Migration[7.0]
+  def change
+    remove_column :responses, :submitted_at
+  end
+end
