@@ -12,10 +12,10 @@ Rails.application.routes.draw do
           resources :question_options
         end
         resources :answers, only: [:create]
+        resources :responses
       end
 
       resources :users
-      resources :responses
 
       resources :refresh_tokens, only: %i[create destroy]
     end
