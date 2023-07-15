@@ -17,17 +17,17 @@ RUN bundle install
 COPY . /app/
 
 # Set environment variables
-ENV RAILS_ENV production
+ENV RAILS_ENV development
 ENV RAILS_SERVE_STATIC_FILES true
 
 # Precompile assets
 RUN bundle exec rake assets:precompile
 
 # Run database migrations
-RUN bundle exec rake db:migrate
+# RUN bundle exec rake db:migrate
 
 # Expose port 3000
-EXPOSE 3000
+EXPOSE 3001
 
 # Start the Rails server
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3001"]
