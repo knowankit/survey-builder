@@ -6,17 +6,16 @@
 #
 default: &default
   adapter: postgresql
-  database: postgres
-  username: surveybuilder
-  password: surveybuilder
+  encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 development:
   <<: *default
-  adapter: postgresql
-  database: postgres
-  username: surveybuilder
+  host: db
+  port: 5432
+  database: surveybuilder
+  username: knowankit
   password: surveybuilder
 
 # Warning: The database defined as "test" will be erased and

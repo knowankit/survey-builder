@@ -1,0 +1,33 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - 3001:3001
+    environment:
+      - POSTGRES_USER=knowankit
+      - POSTGRES_PASSWORD=surveybuilder
+      - POSTGRES_DB=surveybuilder
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+  db:
+    image: postgres:15-alpine
+    container_name: postgresdb
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=knowankit
+      - POSTGRES_PASSWORD=surveybuilder
+      - POSTGRES_DB=surveybuilder
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}
+
+# networks:
+#   default:
+#     name: surveybuildernetwork
