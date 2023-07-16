@@ -31,8 +31,10 @@ module SurveyBuilder
       allow do
         origins ['http://localhost:3000', 'https://survey-builder-form.vercel.app']
         resource '*',
-                 headers: :any, methods: %i[get post put patch delete options],
-                 credentials: true
+          headers: :any,
+          methods: [:get, :post, :put, :patch, :delete, :options, :head],
+          credentials: true,
+          expose: ['Set-Cookie']
       end
     end
   end

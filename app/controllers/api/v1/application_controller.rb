@@ -9,11 +9,12 @@ module Api
       private
 
       def authenticate_user
-        authorization_header = request.headers['Authorization']
-
-        if authorization_header
-          token = authorization_header.split[1]
-          decoded_token = decode_token(token)
+        # authorization_header = request.headers['Authorization']
+        access_token = request.cookies["access_token"]
+        puts "accesstoken=====#{request.cookies}"
+        if access_token
+          # token = authorization_header.split[1]
+          decoded_token = decode_token(access_token)
           user_id = decoded_token[0]['user_id']
           @current_user = User.find_by(id: user_id)
 

@@ -53,7 +53,7 @@ module Api
 
       def generate_access_token(user)
         secret = ENV.fetch('jwt_secret_key', nil)
-        expiration_time = Time.now.to_i + 3600
+        expiration_time = Time.now.to_i + (60 * 60 * 24 * 1000)
 
         access_token_payload = {
           user_id: user.id,
