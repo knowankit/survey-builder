@@ -47,7 +47,8 @@ module Api
           expires: expiration,
           secure: Rails.env.production?,
           httpOnly: Rails.env.production?,
-          same_site: :strict
+          same_site: :strict,
+          domain: '.knowankit.com'
         }
       end
 
