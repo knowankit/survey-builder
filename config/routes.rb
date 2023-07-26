@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         resources :responses
       end
 
+      get 'users/me', to: 'users#me'
       resources :users
 
       resources :refresh_tokens, only: %i[create destroy]
