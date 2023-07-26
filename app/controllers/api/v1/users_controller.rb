@@ -25,7 +25,7 @@ module Api
       end
 
       def me
-        user = User.where(id: @current_user.id)
+        user = User.find(@current_user.id)
 
         if user
           render json: user
