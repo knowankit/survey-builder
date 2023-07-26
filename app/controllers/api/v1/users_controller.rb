@@ -4,7 +4,7 @@ module Api
   module V1
     # This class handles API requests related to user
     class UsersController < Api::V1::ApplicationController
-      before_action :authenticate_user, only: [:index]
+      before_action :authenticate_user, only: [:index, :me]
 
       def index
         users = User.all
@@ -19,6 +19,16 @@ module Api
           access_token = generate_access_token(user)
           refresh_token = generate_refresh_token(user)
           render json: { access_token:, refresh_token: }
+        else
+          render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+      def me
+        user = User.where(id: @current_user.id)
+
+        if user
+          render json: user
         else
           render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
         end
