@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       end
 
       get 'users/me', to: 'users#me'
+      get 'users/logout', to: 'users#logout'
       resources :users
 
       resources :refresh_tokens, only: %i[create destroy]
