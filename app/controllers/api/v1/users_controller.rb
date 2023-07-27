@@ -5,6 +5,7 @@ module Api
     # This class handles API requests related to user
     class UsersController < Api::V1::ApplicationController
       before_action :authenticate_user, only: [:index, :me]
+      include ActionController::Cookies
 
       def index
         users = User.all
@@ -34,6 +35,14 @@ module Api
         end
       end
 
+      def logout
+        expiration = 1.second.ago
+        set_cookie(:access_token, '', expiration)
+        set_cookie(:refresh_token, '', expiration)
+
+        render json: { status: 200 }
+      end
+
       def update
         User.find(params[:id])
         user = User.update(user_params)
@@ -52,6 +61,17 @@ module Api
 
       def user_params
         params.require(:user).permit(:name, :username, :email, :is_confirmed, :role, :last_seen, :password_digest)
+      end
+
+      def set_cookie(name, value, expiration)
+        cookies[name] = {
+          value:,
+          expires: expiration,
+          secure: Rails.env.production?,
+          httpOnly: true,
+          same_site: :strict,
+          domain: Rails.env.production? ? '.knowankit.com' : :all
+        }
       end
     end
   end

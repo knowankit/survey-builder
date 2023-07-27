@@ -48,7 +48,7 @@ module Api
           secure: Rails.env.production?,
           httpOnly: true,
           same_site: :strict,
-          domain: Rails.env.production? ? :all : '.knowankit.com'
+          domain: Rails.env.production? ? '.knowankit.com' : :all
         }
       end
 
