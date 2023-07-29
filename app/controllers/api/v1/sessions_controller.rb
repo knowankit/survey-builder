@@ -9,13 +9,16 @@ module Api
 
       def create
         user = find_user
-
         if authenticated?(user)
+
           access_token = generate_access_token(user)
           refresh_token = generate_refresh_token(user)
 
           access_token_cookie(access_token)
           refresh_token_cookie(refresh_token)
+
+          # Update last seen
+          user.update(last_seen: Time.current)
 
           render json: { access_token:, refresh_token: }
         else
