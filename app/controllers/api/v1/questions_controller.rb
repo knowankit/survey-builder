@@ -13,6 +13,12 @@ module Api
       end
 
       def create
+        # Validate the question_type before creating the question
+        question_type = question_params[:question_type]
+        unless ['single_line', 'single_option', 'multiple_options'].include?(question_type)
+          return render json: { error: 'Invalid question type' }, status: :unprocessable_entity
+        end
+
         question = Question.new(question_params)
         question.user_id = @current_user.id
         question.survey_id = params[:survey_id]
