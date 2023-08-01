@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: [:create]
 
+      get 'surveys/permalink_validation', to: 'surveys#permalink_validation'
+
       resources :surveys do
         resources :questions do
           resources :question_options
@@ -14,6 +16,7 @@ Rails.application.routes.draw do
         resources :answers, only: [:create]
         resources :responses
       end
+
 
       get 'users/me', to: 'users#me'
       get 'users/logout', to: 'users#logout'
