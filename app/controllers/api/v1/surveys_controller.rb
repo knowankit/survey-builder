@@ -21,6 +21,16 @@ module Api
         end
       end
 
+      def permalink_validation
+        survey = Survey.find_by(permalink: params[:permalink])
+
+        if survey
+          render json: { message: 'Permalink is not available', status: :conflict }
+        else
+          render json: { message: 'Permalink available' }
+        end
+      end
+
       def create
         survey = Survey.new(survey_params)
         survey.user_id = @current_user.id
