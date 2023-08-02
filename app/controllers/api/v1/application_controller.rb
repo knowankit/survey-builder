@@ -35,7 +35,12 @@ module Api
       def decode_token(token)
         secret = ENV.fetch('jwt_secret_key', nil)
 
-        JWT.decode(token, secret, true, algorithm: 'HS256')
+        begin
+          JWT.decode(token, secret, true, algorithm: 'HS256')
+        rescue => exception
+          render json: { error: 'Invalid token', status: :unprocessable_entity }
+        end
+
       end
 
       attr_reader :current_user
