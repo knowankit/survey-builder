@@ -12,9 +12,9 @@ module Api
       end
 
       def show
-        survey = Survey.includes(questions: :question_options).find_by(id: params[:id], user_id: @current_user.id)
+        survey = Survey.friendly.includes(questions: :question_options).find(params[:id])
 
-        if survey
+        if survey && survey.user_id == @current_user.id
           render json: survey, include: { questions: { include: :question_options } }
         else
           render json: { error: 'Survey not found' }, status: :not_found
