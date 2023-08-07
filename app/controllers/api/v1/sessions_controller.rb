@@ -12,12 +12,12 @@ module Api
 
         if authenticated?(user)
           access_token = generate_access_token(user)
-          refresh_token = generate_refresh_token(user)
+          # refresh_token = generate_refresh_token(user)
 
           access_token_cookie(access_token)
-          refresh_token_cookie(refresh_token)
+          # refresh_token_cookie(refresh_token)
 
-          render json: { access_token:, refresh_token: }
+          render json: { access_token: }
         else
           render_unauthorized_error
         end
@@ -26,7 +26,9 @@ module Api
       private
 
       def find_user
-        User.find_by(email: params[:email])
+        user =  User.find_by(email: params[:login])
+        user ||= User.find_by(username: params[:login])
+        user
       end
 
       def authenticated?(user)
