@@ -5,6 +5,7 @@ module Api
     # This class handles API requests related to surveys
     class SurveysController < Api::V1::ApplicationController
       before_action :authenticate_user
+      skip_before_action :authenticate_user, only: :show_published_survey
 
       def index
         surveys = Survey.where(user_id: @current_user.id)
@@ -15,6 +16,17 @@ module Api
         survey = Survey.friendly.includes(questions: :question_options).find(params[:id])
 
         if survey && survey.user_id == @current_user.id
+          render json: survey, include: { questions: { include: :question_options } }
+        else
+          render json: { error: 'Survey not found' }, status: :not_found
+        end
+      end
+
+      # This is API is public for getting the survey details
+      def show_published_survey
+        survey = Survey.friendly.includes(questions: :question_options).find(params[:survey_id])
+
+        if survey && survey.is_published
           render json: survey, include: { questions: { include: :question_options } }
         else
           render json: { error: 'Survey not found' }, status: :not_found

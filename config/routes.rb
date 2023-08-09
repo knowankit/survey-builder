@@ -9,10 +9,14 @@ Rails.application.routes.draw do
 
       get 'surveys/permalink_validation', to: 'surveys#permalink_validation'
 
+
       resources :surveys do
         resources :questions do
           resources :question_options
         end
+
+        get '/published', to: 'surveys#show_published_survey'
+
         resources :answers, only: [:create]
         resources :responses
       end
