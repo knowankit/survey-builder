@@ -22,6 +22,30 @@ module Api
         end
       end
 
+      def publish
+        survey = Survey.friendly.find(params[:survey_id])
+
+        if survey.user_id != @current_user.id
+          render json: { error: 'Survey not found' }, status: :unprocessable_entity
+        end
+
+        if survey.update(is_published: true)
+          render json: { message: 'Survey published successfully' }
+        else
+          render json: { error: 'Unable to publish survey' }, status: :unprocessable_entity
+        end
+      end
+
+      def unpublish
+        survey = Survey.friendly.find(params[:survey_id])
+
+        if survey.update(is_published: false)
+          render json: { message: 'Survey unpublished successfully' }
+        else
+          render json: { error: 'Unable to unpublish survey' }, status: :unprocessable_entity
+        end
+      end
+
       # This is API is public for getting the survey details
       def show_published_survey
         survey = Survey.friendly.includes(questions: :question_options).find(params[:survey_id])

@@ -17,6 +17,9 @@ Rails.application.routes.draw do
 
         get '/published', to: 'surveys#show_published_survey'
 
+        put '/publish', to: 'surveys#publish'
+        put '/unpublish', to: 'surveys#unpublish'
+
         resources :answers, only: [:create]
         resources :responses
       end
