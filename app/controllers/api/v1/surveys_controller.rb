@@ -8,8 +8,14 @@ module Api
       skip_before_action :authenticate_user, only: :show_published_survey
 
       def index
-        surveys = Survey.where(user_id: @current_user.id)
-        render json: surveys
+        default_per_page = 10
+        default_page = 1
+        per_page = params.fetch(:per_page, default_per_page).to_i
+        page = params.fetch(:page, default_page).to_i
+
+        surveys = Survey.where(user_id: @current_user.id).page(page).per(per_page)
+
+        render json: { surveys:, page:, per_page: }
       end
 
       def show
