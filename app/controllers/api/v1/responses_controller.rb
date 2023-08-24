@@ -5,16 +5,11 @@ module Api
     # This class handles API requests related to responses of survey.
     class ResponsesController < ApplicationController
       def show
-        # survey = Question.find_by(survey_id: params[:survey_id])
-        # response = Answer.where(response_id: params[:id])
-
-        # render json: { response: }
-
-        survey = Survey.find(params[:survey_id])
+        survey = Survey.includes(questions: :answers).find(params[:survey_id])
         response = Response.find(params[:id])
 
         questions_with_answers = survey.questions.map do |question|
-          answers = response.answers.where(question_id: question.id)
+          answers = response.answers.select { |answer| answer.question_id == question.id }
           {
             question: question,
             answers: answers
