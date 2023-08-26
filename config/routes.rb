@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       resources :sessions, only: [:create]
 
       get 'surveys/permalink_validation', to: 'surveys#permalink_validation'
-
+      get 'responses', to: 'responses#get_all_responses'
 
       resources :surveys do
         resources :questions do
