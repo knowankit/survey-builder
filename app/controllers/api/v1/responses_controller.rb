@@ -48,6 +48,7 @@ module Api
             username: response.user.username,
             survey_details: {
               permalink: response.survey.permalink,
+              name: response.survey.name,
             }
           }
         end
