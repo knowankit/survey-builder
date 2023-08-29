@@ -42,6 +42,40 @@ To set up and run the Survey Builder backend on your local machine, follow these
 
 5. **API Endpoints**: Explore and interact with the API endpoints to manage surveys, questions, responses, and more. Refer to the API documentation or routes file for more details.
 
+Absolutely! Here's how you can structure the API endpoints in a tabular format:
+
+## API Endpoints
+
+Below is a list of key API endpoints available in the Survey Builder backend:
+
+| Endpoint                        | Method | Description                                       |
+|---------------------------------|--------|---------------------------------------------------|
+| **Users**                        |        |                                                   |
+| /api/users/register              | POST   | Register a new user account.                     |
+| /api/users/login                 | POST   | Authenticate a user and generate a token.        |
+| /api/users/profile               | GET    | Retrieve user profile information.               |
+| **Surveys**                      |        |                                                   |
+| /api/surveys                     | GET    | Get a list of all surveys.                       |
+| /api/surveys/:id                 | GET    | Get details of a specific survey.               |
+| /api/surveys                     | POST   | Create a new survey.                             |
+| /api/surveys/:id                 | PUT    | Update survey details.                           |
+| /api/surveys/:id                 | DELETE | Delete a survey.                                 |
+| **Questions**                    |        |                                                   |
+| /api/questions                   | GET    | Get a list of all questions for a survey.        |
+| /api/questions/:id               | GET    | Get details of a specific question.             |
+| /api/questions                   | POST   | Create a new question for a survey.             |
+| /api/questions/:id               | PUT    | Update question details.                        |
+| /api/questions/:id               | DELETE | Delete a question.                               |
+| **Question Options**             |        |                                                   |
+| /api/question_options            | GET    | Get options for a specific question.            |
+| /api/question_options            | POST   | Add new options to a question.                  |
+| /api/question_options/:id        | PUT    | Update option details.                          |
+| /api/question_options/:id        | DELETE | Delete an option.                                |
+| **Responses**                    |        |                                                   |
+| /api/responses                   | GET    | Get responses for a specific survey.            |
+| /api/responses                   | POST   | Submit a response for a survey.                 |
+
+
 ## Database Structure
 
 The Survey Builder backend uses PostgreSQL for data storage. Here's an overview of the database structure and key resources:
