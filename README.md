@@ -4,6 +4,8 @@
 </p>
 Welcome to the Survey Builder backend repository! This project is dedicated to the backend development of the Survey Builder application, which serves as the foundation for the Survey Builder UI frontend. Built using Ruby on Rails and leveraging PostgreSQL as the database, this backend system manages crucial resources such as users, answers, surveys, questions, question options, and responses.
 
+For the corresponding front-end repository, which consumes this API, please visit [Survey Builder UI](https://github.com/knowankit/survey-builder-ui).
+
 This app is also dockerise so after the cloning the repo you can run `docker-compose up` to start it and access the api at `localhost:3001`. Test it by visiting  `localhost:3001/heartbeat`.
 
 # Pending
