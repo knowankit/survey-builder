@@ -1,5 +1,7 @@
 # Survey Builder API
-
+<p align="center">
+   <img width="600" alt="Screenshot 2023-08-27 at 5 30 24 PM" src="https://github.com/knowankit/survey-builder/assets/44323532/7da4ae93-473f-488d-92b0-db8ff5682a8a">
+</p>
 Welcome to the Survey Builder backend repository! This project is dedicated to the backend development of the Survey Builder application, which serves as the foundation for the Survey Builder UI frontend. Built using Ruby on Rails and leveraging PostgreSQL as the database, this backend system manages crucial resources such as users, answers, surveys, questions, question options, and responses.
 
 This app is also dockerise so after the cloning the repo you can run `docker-compose up` to start it and access the api at `localhost:3001`. Test it by visiting  `localhost:3001/heartbeat`.
