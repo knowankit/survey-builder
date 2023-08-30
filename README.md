@@ -2,6 +2,8 @@
 
 Welcome to the Survey Builder backend repository! This project is dedicated to the backend development of the Survey Builder application, which serves as the foundation for the Survey Builder UI frontend. Built using Ruby on Rails and leveraging PostgreSQL as the database, this backend system manages crucial resources such as users, answers, surveys, questions, question options, and responses.
 
+This app is also dockerise so after the cloning the repo you can run `docker-compose up` to start it and access the api at `localhost:3001`. Test it by visiting  `localhost:3001/heartbeat`.
+
 ## Features
 
 - **User Management**: Handle user authentication, registration, and profiles.
@@ -51,30 +53,31 @@ Below is a list of key API endpoints available in the Survey Builder backend:
 | Endpoint                        | Method | Description                                       |
 |---------------------------------|--------|---------------------------------------------------|
 | **Users**                        |        |                                                   |
-| /api/users/register              | POST   | Register a new user account.                     |
-| /api/users/login                 | POST   | Authenticate a user and generate a token.        |
-| /api/users/profile               | GET    | Retrieve user profile information.               |
+| /api/v1/users/register              | POST   | Register a new user account.                     |
+| /api/v1/users/login                 | POST   | Authenticate a user and generate a token.        |
+| /api/v1/users/profile               | GET    | Retrieve user profile information.               |
 | **Surveys**                      |        |                                                   |
-| /api/surveys                     | GET    | Get a list of all surveys.                       |
-| /api/surveys/:id                 | GET    | Get details of a specific survey.               |
-| /api/surveys                     | POST   | Create a new survey.                             |
-| /api/surveys/:id                 | PUT    | Update survey details.                           |
-| /api/surveys/:id                 | DELETE | Delete a survey.                                 |
+| /api/v1/surveys                     | GET    | Get a list of all surveys.                       |
+| /api/v1/surveys/:id                 | GET    | Get details of a specific survey.               |
+| /api/v1/surveys                     | POST   | Create a new survey.                             |
+| /api/v1/surveys/:id                 | PUT    | Update survey details.                           |
+| /api/v1/surveys/:id                 | DELETE | Delete a survey.                                 |
 | **Questions**                    |        |                                                   |
-| /api/questions                   | GET    | Get a list of all questions for a survey.        |
-| /api/questions/:id               | GET    | Get details of a specific question.             |
-| /api/questions                   | POST   | Create a new question for a survey.             |
-| /api/questions/:id               | PUT    | Update question details.                        |
-| /api/questions/:id               | DELETE | Delete a question.                               |
+| /api/v1/questions                   | GET    | Get a list of all questions for a survey.        |
+| /api/v1/questions/:id               | GET    | Get details of a specific question.             |
+| /api/v1/questions                   | POST   | Create a new question for a survey.             |
+| /api/v1/questions/:id               | PUT    | Update question details.                        |
+| /api/v1/questions/:id               | DELETE | Delete a question.                               |
 | **Question Options**             |        |                                                   |
-| /api/question_options            | GET    | Get options for a specific question.            |
-| /api/question_options            | POST   | Add new options to a question.                  |
-| /api/question_options/:id        | PUT    | Update option details.                          |
-| /api/question_options/:id        | DELETE | Delete an option.                                |
+| /api/v1/question_options            | GET    | Get options for a specific question.            |
+| /api/v1/question_options            | POST   | Add new options to a question.                  |
+| /api/v1/question_options/:id        | PUT    | Update option details.                          |
+| /api/v1/question_options/:id        | DELETE | Delete an option.                                |
 | **Responses**                    |        |                                                   |
-| /api/responses                   | GET    | Get responses for a specific survey.            |
-| /api/responses                   | POST   | Submit a response for a survey.                 |
-
+| /api/v1/responses/:id                   | GET    | Get responses for a specific survey.            |
+| /api/v1/responses                   | POST   | Submit a response for a survey.                 |
+| /api/v1/responses                   | GET   | Get all responses           |
+| /heartbeat                   | GET   | Get API running status           |
 
 ## Database Structure
 
@@ -85,6 +88,7 @@ The Survey Builder backend uses PostgreSQL for data storage. Here's an overview 
 - **Questions**: Define questions with various types and options.
 - **Question Options**: Store options for multiple-choice and other related questions.
 - **Responses**: Capture responses from participants for analysis.
+- **Answers**: Store answers for each survey questions
 
 ## Contributing
 
