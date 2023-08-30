@@ -4,6 +4,14 @@ Welcome to the Survey Builder backend repository! This project is dedicated to t
 
 This app is also dockerise so after the cloning the repo you can run `docker-compose up` to start it and access the api at `localhost:3001`. Test it by visiting  `localhost:3001/heartbeat`.
 
+# Pending
+ * Background jobs ⏱️
+ * More questions type
+ * Complex validations
+ * Email verification
+ * Forgot password
+ * Refresh token
+
 ## Features
 
 - **User Management**: Handle user authentication, registration, and profiles.
@@ -15,6 +23,39 @@ This app is also dockerise so after the cloning the repo you can run `docker-com
 ## Getting Started
 
 To set up and run the Survey Builder backend on your local machine, follow these steps:
+
+I've separated the steps for using the app using Docker and running it locally:
+
+### Using Docker
+
+To run the Survey Builder backend using Docker, follow these steps:
+
+1. **Clone the Repository**: Clone this repository to your local machine using Git.
+
+   ```bash
+   git clone https://github.com/knowankit/survey-builder.git
+   cd survey-builder
+   ```
+
+2. **Build Docker Image**: Build the Docker image for the app.
+
+   ```bash
+   docker-compose build
+   ```
+
+3. **Start the Docker Containers**: Start the app and PostgreSQL database containers.
+
+   ```bash
+   docker-compose up
+   ```
+
+4. **Access the API**: The app should now be running. You can access the API at `http://localhost:3001`.
+
+5. **Test the API**: To test if the API is running, you can visit `http://localhost:3001/heartbeat`.
+
+### Running Locally
+
+To run the Survey Builder backend locally, follow these steps:
 
 1. **Clone the Repository**: Clone this repository to your local machine using Git.
 
@@ -42,9 +83,9 @@ To set up and run the Survey Builder backend on your local machine, follow these
    rails server
    ```
 
-5. **API Endpoints**: Explore and interact with the API endpoints to manage surveys, questions, responses, and more. Refer to the API documentation or routes file for more details.
+5. **Access the API**: The app should now be running. You can access the API at `http://localhost:3001`.
 
-Absolutely! Here's how you can structure the API endpoints in a tabular format:
+6. **Test the API**: To test if the API is running, you can visit `http://localhost:3001/heartbeat`.
 
 ## API Endpoints
 
