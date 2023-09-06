@@ -1,4 +1,7 @@
 # Survey Builder API
+
+**Note:** Survey Builder is currently hosted on a free server. Please keep in mind that it might take a few minutes to initiate the first time you access it. We appreciate your patience!.
+
 <p align="center">
    <img width="600" alt="Screenshot 2023-08-27 at 5 30 24 PM" src="https://github.com/knowankit/survey-builder/assets/44323532/2d712231-d973-4e51-8704-fcc172873542">
 </p>
