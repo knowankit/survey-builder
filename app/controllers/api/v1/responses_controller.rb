@@ -4,21 +4,6 @@ module Api
   module V1
     # This class handles API requests related to responses of survey.
     class ResponsesController < Api::V1::ApplicationController
-      def show
-        survey = Survey.includes(questions: :answers).find(params[:survey_id])
-        response = Response.find(params[:id])
-
-        questions_with_answers = survey.questions.map do |question|
-          answers = response.answers.select { |answer| answer.question_id == question.id }
-          {
-            question: question,
-            answers: answers
-          }
-        end
-
-        render json: questions_with_answers
-      end
-
       def index
         default_per_page = 10
         default_page = 1
@@ -28,6 +13,21 @@ module Api
         responses = Response.where(user_id: @current_user.id).page(page).per(per_page)
 
         render json: { responses:, page:, per_page: }
+      end
+
+      def show
+        survey = Survey.includes(questions: :answers).find(params[:survey_id])
+        response = Response.find(params[:id])
+
+        questions_with_answers = survey.questions.map do |question|
+          answers = response.answers.select { |answer| answer.question_id == question.id }
+          {
+            question:,
+            answers:
+          }
+        end
+
+        render json: questions_with_answers
       end
 
       def get_all_responses
@@ -48,7 +48,7 @@ module Api
             username: response.user.username,
             survey_details: {
               permalink: response.survey.permalink,
-              name: response.survey.name,
+              name: response.survey.name
             }
           }
         end

@@ -15,7 +15,7 @@ module Api
       def create
         # Validate the question_type before creating the question
         question_type = question_params[:question_type]
-        unless ['single_line', 'single_option', 'multiple_options'].include?(question_type)
+        unless %w[single_line single_option multiple_options].include?(question_type)
           return render json: { error: 'Invalid question type' }, status: :unprocessable_entity
         end
 

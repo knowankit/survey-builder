@@ -24,7 +24,6 @@ Rails.application.routes.draw do
         resources :responses
       end
 
-
       get 'users/me', to: 'users#me'
       get 'users/logout', to: 'users#logout'
       resources :users

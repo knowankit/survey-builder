@@ -37,10 +37,9 @@ module Api
 
         begin
           JWT.decode(token, secret, true, algorithm: 'HS256')
-        rescue => exception
+        rescue StandardError => e
           render json: { error: 'Invalid token', status: :unprocessable_entity }
         end
-
       end
 
       attr_reader :current_user

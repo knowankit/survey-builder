@@ -26,7 +26,7 @@ module Api
       private
 
       def find_user
-        user =  User.find_by(email: params[:login])
+        user = User.find_by(email: params[:login])
         user ||= User.find_by(username: params[:login])
         user
       end
