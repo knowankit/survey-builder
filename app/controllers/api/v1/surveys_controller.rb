@@ -31,9 +31,7 @@ module Api
       def publish
         survey = Survey.friendly.find(params[:survey_id])
 
-        if survey.user_id != @current_user.id
-          render json: { error: 'Survey not found' }, status: :unprocessable_entity
-        end
+        render json: { error: 'Survey not found' }, status: :unprocessable_entity if survey.user_id != @current_user.id
 
         if survey.update(is_published: true)
           render json: { message: 'Survey published successfully' }
