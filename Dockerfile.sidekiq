@@ -1,0 +1,19 @@
+# Use an official Ruby runtime as a parent image
+FROM ruby:3.2.2-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Install dependencies
+RUN apt-get update && \
+  apt-get install -y nodejs && \
+  gem install bundler
+
+# Copy your Sidekiq worker code into the container
+COPY ./path/to/your/sidekiq/worker ./sidekiq_worker
+
+# Install gems
+RUN bundle install
+
+# Start Sidekiq
+CMD ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]

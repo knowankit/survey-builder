@@ -8,6 +8,9 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+require 'securerandom'
+File.open('.session.key', 'w') { |f| f.write(SecureRandom.hex(64)) }
+
 module SurveyBuilder
   # This class handles app configuration
   class Application < Rails::Application
