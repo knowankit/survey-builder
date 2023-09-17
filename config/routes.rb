@@ -1,7 +1,12 @@
 # frozen_string_literal: true
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
   resources :refresh_tokens
+
+  if Rails.env.development? || Rails.env.staging?
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   namespace :api do
     namespace :v1 do

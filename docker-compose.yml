@@ -1,7 +1,9 @@
 version: '3'
+
 services:
   app:
     build: .
+    container_name: api
     ports:
       - 3001:3001
     environment:
@@ -24,6 +26,24 @@ services:
       - POSTGRES_DB=surveybuilder
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+
+  sidekiq:
+    build:
+      context: .
+    command: bundle exec sidekiq
+    container_name: sidekiq
+    depends_on:
+      - redis
+    volumes:
+      - .:/app
+    environment:
+      - RAILS_ENV=development # Set the appropriate environment
 
 volumes:
   postgres_data: {}
