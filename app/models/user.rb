@@ -4,6 +4,8 @@ require 'bcrypt'
 
 # This model contains the User schema
 class User < ApplicationRecord
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
   include BCrypt
 
   has_many :surveys, dependent: :destroy

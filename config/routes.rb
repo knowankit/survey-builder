@@ -2,6 +2,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
+
   resources :refresh_tokens
 
   if Rails.env.development? || Rails.env.staging?
@@ -11,7 +12,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :sessions, only: [:create]
-
+      devise_for :users
       get 'surveys/permalink_validation', to: 'surveys#permalink_validation'
       get 'responses', to: 'responses#get_all_responses'
 
