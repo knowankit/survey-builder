@@ -23,7 +23,11 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: postgres
+  host: db
+  port: 5432
+  database: surveybuilder
+  username: knowankit
+  password: surveybuilder
 
 production:
   <<: *default
