@@ -54,7 +54,6 @@ Devise.setup do |config|
   # if you set :request_keys to [:subdomain], :subdomain will be used on authentication.
   # The same considerations mentioned for authentication_keys also apply to request_keys.
   # config.request_keys = []
-
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
@@ -264,6 +263,7 @@ Devise.setup do |config|
   #
   # The "*/*" below is required to match Internet Explorer requests.
   # config.navigational_formats = ['*/*', :html, :turbo_stream]
+  config.navigational_formats = []
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -310,4 +310,15 @@ Devise.setup do |config|
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
+
+  config.jwt do |jwt|
+    jwt.secret = ENV['jwt_secret_key'] # Set your JWT secret key
+    jwt.dispatch_requests = [['POST', %r{^/api/v1/login/$}]] # Adjust to your sign-in route
+    jwt.revocation_requests = [['DELETE', %r{^/api/v1/logout$}]] # Adjust to your sign-out route
+    jwt.expiration_time = 1.day.to_i # Set the token expiration time (optional)
+
+    # Specify the JWT revocation strategy (e.g., :jwt_blacklist)
+    # jwt.revocation_strategy = Devise::JWT::RevocationStrategies::Blacklist
+    # jwt.revocation_strategy = :jwt_blacklist
+  end
 end

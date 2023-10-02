@@ -2,7 +2,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-
   resources :refresh_tokens
 
   if Rails.env.development? || Rails.env.staging?
@@ -11,17 +10,14 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :sessions, only: [:create]
-      # devise_for :users
-
       devise_for :users, path: '', path_names: {
         sign_in: 'login',
         sign_out: 'logout',
         registration: 'signup'
       },
       controllers: {
-        sessions: 'api/v1/sessions',
-        registrations: 'api/v1/registrations'
+        sessions: 'api/v1/users/sessions',
+        registrations: 'api/v1/users/registrations'
       }
 
       get 'surveys/permalink_validation', to: 'surveys#permalink_validation'
@@ -41,9 +37,9 @@ Rails.application.routes.draw do
         resources :responses
       end
 
-      get 'users/me', to: 'users#me'
-      get 'users/logout', to: 'users#logout'
-      resources :users
+      # get 'users/me', to: 'users#me'
+      # get 'users/logout', to: 'users#logout'
+      # resources :users
 
       resources :refresh_tokens, only: %i[create destroy]
     end
