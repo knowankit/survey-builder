@@ -10,7 +10,15 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :sessions, only: [:create]
+      devise_for :users, path: '', path_names: {
+        sign_in: 'login',
+        sign_out: 'logout',
+        registration: 'signup'
+      },
+      controllers: {
+        sessions: 'api/v1/users/sessions',
+        registrations: 'api/v1/users/registrations'
+      }
 
       get 'surveys/permalink_validation', to: 'surveys#permalink_validation'
       get 'responses', to: 'responses#get_all_responses'
@@ -29,9 +37,9 @@ Rails.application.routes.draw do
         resources :responses
       end
 
-      get 'users/me', to: 'users#me'
-      get 'users/logout', to: 'users#logout'
-      resources :users
+      # get 'users/me', to: 'users#me'
+      # get 'users/logout', to: 'users#logout'
+      # resources :users
 
       resources :refresh_tokens, only: %i[create destroy]
     end
