@@ -11,7 +11,7 @@ module Api
         user = find_user
 
         if authenticated?(user)
-          WelcomeEmailWorker.perform_async(user.id)
+          # WelcomeEmailWorker.perform_async(user.id)
           access_token = generate_access_token(user)
           # refresh_token = generate_refresh_token(user)
 
